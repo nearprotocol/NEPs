@@ -3,8 +3,8 @@
 This part of specification describes specifics of upgrading the protocol, and touches on few different parts of the system.
 
 Three different levels of upgradability are:
-1. Updating without any changes to underlaying data structures or protocol;
-2. Updating when underlaying data structures changed (config, database or something else internal to the node and probably client specific);
+1. Updating without any changes to underlying data structures or protocol;
+2. Updating when underlying data structures changed (config, database or something else internal to the node and probably client specific);
 3. Updating with protocol changes that all validating nodes must adjust to.
 
 ## Versioning
@@ -33,24 +33,67 @@ General recommendation is to store version in the database and on binary start, 
 
 Generally, we handle data structure upgradability via enum wrapper around it. See `BlockHeader` structure for example.
 
-### Versioned data structures
+## Backward compatibility
 
-Given we expect many data structures to change or get updated as protocol evolves, a few changes are required to support that.
-
-The major one is adding backward compatible `Versioned` data structures like this one:
+When two peers connect to each other for the first time, on the handshake they communicate to the other part two numbers:
 
 ```rust
-enum VersionedBlockHeader {
-    BlockHeaderV1(BlockHeaderV1),
-    /// Current version, where `BlockHeader` is used internally for all operations.
-    BlockHeaderV2(BlockHeader),
+struct Handshake {
+    /// Current protocol version of the client.
+    version: u32,
+    /// Oldest supported protocol version this client can communicate with.
+    oldest_supported_version: u32,
+    ...
 }
 ```
 
-Where `VersionedBlockHeader` will be stored on disk and sent over the wire.
-This allows to encode and decode old versions (up to 256 given https://borsh.io specficiation). If some data structures has more than 256 versions, old versions are probably can be retired and reused.
+It is expected that client can communicate at least with previous version, i.e. `oldest_supported_version < version`.
+A between two peers will be established (regarding protocol versions) according to the following code:
 
-Internally current version is used. Previous versions either much interfaces / traits that are defined by different components or are up-casted into the next version (saving for hash validation).
+```python
+def accept_connection(self, handshake):
+    # The other peer has a newer (or equal) version than us, and support our version
+    if handshake.oldest_supported_version <= self.version <= handshake.version:
+        return True
+
+    # Our version is newer (or equal) to other peers version and we support their version
+    if self.oldest_supported_version <= handshake.version <= self.version:
+        return True
+
+    return False
+```
+
+### Versioned data structures
+
+Given we expect many data structures to change or get updated as protocol evolves, a few changes are required to support that. Nodes should keep track the protocol version of its peers, and serialize and deserialize messages using the corresponding layout for this version.
+
+In particular, if there are two peers A and B, if A is using `versionA` and B is using `versionB` and they can communicate to each other, they will do it using layouts corresponding to version `min(versionA, versionB)`. To enable this we will have the following functions:
+
+```python
+def serialize(message, version):
+    """
+    `message` is a data structure with the layout of the current version this node is using.
+    `version` is the version of the layout to be used to serialize this message.
+    """
+    # Migrate from one layout to expected layout.
+    # Notice this will only be used to degrade some message to a previous **supported** version.
+    message_v = message.into(version)
+    # Serialize a message using layout for given version
+    return serialize(message_v)
+
+def deserialize(buffer, version):
+    """
+    `buffer` contains byte array received from other peer
+    `version` is the version of the layout used to serialize this message
+    """
+    # Deserialize message
+    message_v = deserialize(buffer)
+    # Convert message from used layout to expected layout.
+    # Notice this will only be used to upgrade some message from a previous **supported** version.
+    return message_v.into(version)
+```
+
+It is possible between different versions that new fields are removed, added or refactored, in that case `into` function should handle the migration between the data structure used over the network and the data structure used by the node, in most cases it will consist purely on deleting or adding default values to some fields.
 
 ### Consensus
 
@@ -59,7 +102,7 @@ Internally current version is used. Previous versions either much interfaces / t
 | `PROTOCOL_UPGRADE_BLOCK_THRESHOLD` | `80%` |
 | `PROTOCOL_UPGRADE_NUM_EPOCHS` | `2` |
 
-The way the version will be indicated by validators, will be via 
+The way the version will be indicated by validators, will be via
 
 ```rust
 /// Add `version` into block header.
