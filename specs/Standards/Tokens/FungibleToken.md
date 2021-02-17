@@ -139,8 +139,8 @@ Let's first setup open order by Alex on DEX. It's similar to `Token deposit to a
 Then Charlie comes and decides to fulfill the order by selling his wLTC to Alex on DEX.
 Charlie calls the DEX
 - Charlie sets the allowance on wLTC to DEX
-- Alex calls deposit on Dex for wLTC.
-- Then calls DEX to take the order from Alex.
+- Charlie calls deposit on Dex for wLTC.
+- Charlie calls DEX to take the order from Alex.
 
 When called, DEX makes 2 async transfers calls to exchange corresponding tokens.
 - DEX calls wLTC to transfer tokens DEX to Alex.
