@@ -48,3 +48,4 @@
 - [Economics](Economics/README.md)
 - [Standards](Standards/README.md)
   - [Fungible Token](Standards/Tokens/FungibleToken.md)
+  - [Smart Contract Upgradability](Standards/Upgradability.md)
