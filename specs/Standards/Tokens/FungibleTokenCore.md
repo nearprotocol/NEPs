@@ -1,4 +1,4 @@
-# Fungible Token ([NEP-141](https://github.com/near/NEPs/issues/141))
+# Fungible Token ([NEP-141](https://github.com/near/NEPs/blob/master/specs/Standards/Tokens/FungibleTokenCore.md))
 
 Version `1.0.0`
 
