@@ -72,6 +72,13 @@ type FungibleTokenMetadata = {
     reference_hash: string|null;
     decimals: number;
 }
+
+/**********************************/
+/* VIEW METHODS on fungible token */
+/**********************************/
+
+// Returns metadata for a token
+ft_metadata(): FungibleTokenMetadata
 ```
 
 **An implementing contract MUST include the following fields on-chain**
@@ -86,6 +93,12 @@ type FungibleTokenMetadata = {
 - `icon`: a small image associated with this token. Must be a [data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs), to help consumers display it quickly while protecting user data. Recommendation: use [optimized SVG](https://codepen.io/tigt/post/optimizing-svgs-in-data-uris), which can result in high-resolution images with only 100s of bytes of [storage cost](https://docs.near.org/docs/concepts/storage-staking). (Note that these storage costs are incurred to the token owner/deployer, but that querying these icons is a very cheap & cacheable read operation for all consumers of the contract and the RPC nodes that serve the data.) Recommendation: create icons that will work well with both light-mode and dark-mode websites by either using middle-tone color schemes, or by [embedding `media` queries in the SVG](https://timkadlec.com/2013/04/media-queries-within-svg/).
 - `reference`: a link to a valid JSON file containing various keys offering supplementary details on the token. Example: "/ipfs/QmdmQXB2mzChmMeKY47C43LxUdg1NDJ5MWcKMKxDu7RgQm", "https://example.com/token.json", etc. If the information given in this document conflicts with the on-chain attributes, the values in `reference` shall be considered the source of truth.
 - `reference_hash`: the base64-encoded sha256 hash of the JSON file contained in the `reference` field. This is to guard against off-chain tampering.
+
+
+**No incurred cost for core FT behavior**
+
+Contracts should be implemented in a way to avoid extra gas fees for serialization & deserialization of metadata for calls to `ft_*` methods other than `ft_metadata`. See `near-contract-standards` [implementation using `LazyOption`](https://github.com/near/near-sdk-rs/blob/c2771af7fdfe01a4e8414046752ee16fb0d29d39/examples/fungible-token/ft/src/lib.rs#L71) as a reference example.
+
 
 ## Drawbacks
 
