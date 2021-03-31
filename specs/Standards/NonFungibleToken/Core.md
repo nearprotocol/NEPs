@@ -17,7 +17,7 @@ This standard builds off the lessons learned in this early experimentation, and 
 
 Given these attributes, this NFT standard can accomplish with one user interaction things for which other blockchains need two or three. Most noteworthy is `nft_transfer_call`, by which a user can essentially attach a token to a call to a separate contract. An example scenario:
 
-* An [Exquisite Corpse](https://en.wikipedia.org/wiki/Exquisite_corpse) contract allows three drawings to be submitted, one for each section of a final composition, to be minted as its own NFT and sold on a marketplace, splitting royalties amongst the original artists.
+* An [Exquisite Corpse](https://en.wikipedia.org/wiki/Exquisite_corpse) contract allows three drawings to be submitted, one for each section of a final composition, to be minted as its own NFT and sold on a marketplace, splitting [Royalties] amongst the original artists.
 * Alice draws the top third and submits it, Bob the middle third, and Carol follows up with the bottom third. Since they each use `nft_transfer_call` to both transfer their NFT to the Exquisite Corpse contract as well as call a `submit` method on it, the call from Carol can automatically kick off minting a composite NFT from the three submissions, as well as listing this composite NFT in a marketplace.
 * When Dan attempts to also call `nft_transfer_call` to submit an unneeded top third of the drawing, the Exquisite Corpse contract can throw an error, and the transfer will be rolled back so that Bob maintains ownership of his NFT.
 
@@ -42,7 +42,7 @@ Prior art:
 
 ```ts
 // The base structure that will be returned for a token. If contract is using
-// extensions such as Approval Management, Metadata, or other
+// extensions such as Approval Management, Metadata, or Royalties, other
 // attributes may be included in this structure.
 type Token = {
   id: string,
@@ -201,6 +201,7 @@ function nft_on_transfer(
   [ERC-721]: https://eips.ethereum.org/EIPS/eip-721
   [storage staking]: https://docs.near.org/docs/concepts/storage-staking
   [gas]: https://docs.near.org/docs/concepts/gas
+  [Royalties]: Royalties.md
   [Metadata]: Metadata.md
   [Approval Management]: ApprovalManagement.md
 

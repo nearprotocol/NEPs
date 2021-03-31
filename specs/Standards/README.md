@@ -8,4 +8,5 @@
     - [Core Standard](NonFungibleToken/Core.md)
     - [Metadata](NonFungibleToken/Metadata.md)
     - [Approval Management](NonFungibleToken/ApprovalManagement.md)
+    - [Royalties](NonFungibleToken/Royalties.md)
     - [Enumeration](NonFungibleToken/Enumeration.md)
