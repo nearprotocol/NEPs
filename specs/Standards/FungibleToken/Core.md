@@ -133,7 +133,7 @@ Alice wants to swap 5 wrapped NEAR (wNEAR) for BNNA tokens at current market rat
 
 **High-level explanation**
 
-Alice needs to issue one transaction to wNEAR contract to transfer 5 tokens (multiplied by precision) to `amm`, specifying her desired action (swap), her destination token (BNNA) & minimum slippage (<2%) in `msg`.
+Alice needs to issue one transaction to wNEAR contract to transfer 5 tokens (multiplied by precision) to `amm`, specifying her desired action (swap), her destination token (BNNA) & maximum slippage (<2%) in `msg`.
 
 Alice will probably make this call via a UI that knows how to construct `msg` in a way the `amm` contract will understand. However, it's possible that the `amm` contract itself may provide view functions which take desired action, destination token, & slippage as input and return data ready to pass to `msg` for `ft_transfer_call`. For the sake of this example, let's say `amm` implements a view function called `ft_data_to_msg`.
 
@@ -143,17 +143,19 @@ Altogether then, Alice may take two steps, though the first may be a background 
 
 **Technical calls**
 
-1. View `amm::ft_data_to_msg({ action: "swap", destination_token: "bnna", min_slip: 2 })`. Using [NEAR CLI](https://docs.near.org/docs/tools/near-cli):
+1. View `amm::ft_data_to_msg({ action: "swap", destination_token: "bnna", max_slip: 2 })`. Using [NEAR CLI](https://docs.near.org/docs/tools/near-cli):
 
-      near view amm ft_data_to_msg '{
-        "action": "swap",
-        "destination_token": "bnna",
-        "min_slip": 2
-      }'
+       near view amm ft_data_to_msg '{
+         "action": "swap",
+         "destination_token": "bnna",
+         "max_slip": 2
+       }'
+
 
    Then Alice (or the app she uses) will hold onto the result and use it in the next step. Let's say this result is `"swap:bnna,2"`.
 
 2. Call `wnear::ft_on_transfer`. Using NEAR CLI:
+
        near call wnear ft_transfer_call '{
          "receiver_id": "amm",
          "amount": "5000000000000000000000000",
