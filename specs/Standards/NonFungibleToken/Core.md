@@ -57,7 +57,7 @@ type Token = {
 // `receiver_id`.
 //
 // Requirements
-// * Caller of the method must attach a deposit of 1 yoctoⓃ for security purposes
+// * Caller of the method MUST attach a deposit of 1 yoctoⓃ for security purposes
 // * Contract MUST panic if called by someone other than token owner or,
 //   if using Approval Management, one of the approved accounts
 // * `approval_id` is for use with Approval Management extension, see
@@ -66,13 +66,13 @@ type Token = {
 //   successful transfer.
 //
 // Arguments:
-// * `receiver_id`: the valid NEAR account receiving the token
-// * `token_id`: the token to transfer
+// * `receiver_id`: the valid NEAR account receiving the token.
+// * `token_id`: the token to transfer.
 // * `approval_id`: expected approval ID. A number smaller than
 //    2^53, and therefore representable as JSON. See Approval Management
 //    standard for full explanation.
 // * `memo` (optional): for use cases that may benefit from indexing or
-//    providing information for a transfer
+//    providing information for a transfer.
 function nft_transfer(
   receiver_id: string,
   token_id: string,
@@ -81,7 +81,7 @@ function nft_transfer(
 ) {}
 
 // Returns `true` if the token was transferred from the sender's account.
-
+//
 // Transfer token and call a method on a receiver contract. A successful
 // workflow will end in a success execution outcome to the callback on the NFT
 // contract at the method `nft_resolve_transfer`.
@@ -91,14 +91,14 @@ function nft_transfer(
 // receiver contract.
 //
 // Requirements:
-// * Caller of the method must attach a deposit of 1 yoctoⓃ for security
-//   purposes
+// * Caller of the method MUST attach a deposit of 1 yoctoⓃ for security
+//   purposes.
 // * Contract MUST panic if called by someone other than token owner or,
-//   if using Approval Management, one of the approved accounts
-// * The receiving contract must implement `ft_on_transfer` according to the
-//   standard. If it does not, FT contract's `ft_resolve_transfer` MUST deal
+//   if using Approval Management, one of the approved accounts.
+// * The receiving contract must implement `nft_on_transfer` according to the
+//   standard. If it does not, this NFT contract's `nft_resolve_transfer` MUST deal
 //   with the resulting failed cross-contract call and roll back the transfer.
-// * Contract MUST implement the behavior described in `ft_resolve_transfer`
+// * Contract MUST implement the behavior described in `nft_resolve_transfer`
 // * `approval_id` is for use with Approval Management extension, see
 //   that document for full explanation.
 // * If using Approval Management, contract MUST nullify approved accounts on
@@ -139,25 +139,25 @@ The following behavior is required, but contract authors may name this function 
 //
 // The `nft_transfer_call` process:
 //
-// 1. Sender calls `nft_transfer_call` on FT contract
-// 2. NFT contract transfers token from sender to receiver
-// 3. NFT contract calls `nft_on_transfer` on receiver contract
+// 1. Sender calls `nft_transfer_call` on NFT contract.
+// 2. NFT contract transfers token from sender to receiver.
+// 3. NFT contract calls `nft_on_transfer` on receiver contract.
 // 4+. [receiver contract may make other cross-contract calls]
 // N. NFT contract resolves promise chain with `nft_resolve_transfer`, and may
-//    transfer token back to sender
+//    transfer token back to sender.
 //
 // Requirements:
-// * Contract MUST forbid calls to this function by any account except self
-// * If promise chain failed, contract MUST revert token transfer
+// * Contract MUST forbid calls to this function by any account except self.
+// * If promise chain failed, contract MUST revert token transfer.
 // * If promise chain resolves with `true`, contract MUST return token to
-//   `sender_id`
+//   `sender_id`.
 //
 // Arguments:
-// * `sender_id`: the sender of `ft_transfer_call`
-// * `receiver_id`: the `receiver_id` argument given to `ft_transfer_call`
-// * `token_id`: the `token_id` argument given to `ft_transfer_call`
-// * `approved_token_ids`: if using Approval Management, contract MUST provide
-//   set of original approved accounts in this argument, and restore these
+// * `owner_id`: the owner of `token_id`.
+// * `receiver_id`: the `receiver_id` argument given to `nft_transfer_call`.
+// * `token_id`: the `token_id` argument given to `nft_transfer_call`.
+// * `approvals`: if using Approval Management, contract MUST provide.
+//   set of original `approvals` in this argument, and restore these
 //   approved accounts in case of revert.
 //
 // Returns true if token was successfully transferred to `receiver_id`.
@@ -165,7 +165,7 @@ function nft_resolve_transfer(
   owner_id: string,
   receiver_id: string,
   token_id: string,
-  approved_account_ids: null|string[],
+  approvals: null|Record<string, number>,
 ): boolean {}
 ```
 
@@ -174,22 +174,22 @@ function nft_resolve_transfer(
 Contracts which want to make use of `nft_transfer_call` must implement the following:
 
 ```ts
-// Take some action after receiving a non-fungible token
+// Take some action after receiving a non-fungible token.
 //
 // Requirements:
 // * Contract MUST restrict calls to this function to a set of whitelisted NFT
-//   contracts
+//   contracts.
 //
 // Arguments:
-// * `sender_id`: the sender of `nft_transfer_call`
+// * `sender_id`: the sender of `nft_transfer_call`.
 // * `previous_owner_id`: the account that owned the NFT prior to it being
 //   transfered to this contract, which can differ from `sender_id` if using
-//   Approval Management extension
+//   Approval Management extension.
 // * `token_id`: the `token_id` argument given to `nft_transfer_call`
 // * `msg`: information necessary for this contract to know how to process the
 //   request. This may include method names and/or arguments.
 //
-// Returns true if token should be returned to `sender_id`
+// Returns true if token should be returned to `sender_id`.
 function nft_on_transfer(
   sender_id: string,
   previous_owner_id: string,
