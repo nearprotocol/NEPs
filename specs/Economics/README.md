@@ -110,17 +110,6 @@ NEAR validators provide their resources in exchange for a reward `epochReward[t]
 
 ### Validator Selection
 
-| Name | Description |
-| - | - |
-| `proposals: Proposal[]` | The array of all new staking transactions that have happened during the epoch (if one account has multiple only last one is used) |
-| `current_validators` | The array of all existing validators during the epoch |
-| `epoch[T]` | The epoch when validator[v] is selected from the `proposals` auction array |
-| `seat_price` | The minimum stake needed to become validator in epoch[T] |
-| `stake[v]` | The amount in NEAR tokens staked by validator[v] during the auction at the end of epoch[T-2], minus `INCLUSION_FEE` |
-| `shard[v]` | The shard is randomly assigned to validator[v] at epoch[T-1], such that its node can download and sync with its state |
-| `num_allocated_seats[v]` | Number of seats assigned to validator[v], calculated from stake[v]/seatPrice |
-| `validatorAssignments` | The resulting ordered array of all `proposals` with a stake higher than `seatPrice` |
-
 ```rust
 struct Proposal {
     account_id: AccountId,
@@ -130,40 +119,14 @@ struct Proposal {
 ```
 
 During the epoch, outcome of staking transactions produce `proposals`, which are collected, in the form of `Proposal`s.
+There are separate proposals for block producers and chunk-only producers, see [Selecting Chunk and Block Producers](ChainSpec/SelectingBlockProducers.md).
+for more information.
 At the end of every epoch `T`, next algorithm gets executed to determine validators for epoch `T + 2`:
 
-1. For every validator in `current_validators` determine `num_blocks_produced`, `num_chunks_produced` based on what they produced during the epoch.
+1. For every chunk/block producer in `epoch[T]` determine `num_blocks_produced`, `num_chunks_produced` based on what they produced during the epoch.
 2. Remove validators, for whom `num_blocks_produced < num_blocks_expected * BLOCK_PRODUCER_KICKOUT_THRESHOLD` or `num_chunks_produced < num_chunks_expected * CHUNK_PRODUCER_KICKOUT_THRESHOLD`.
-3. Add validators from `proposals`, if validator is also in `current_validators`, considered stake of the proposal is `0 if proposal.stake == 0 else proposal.stake + reward[proposal.account_id]`.
-4. Find seat price `seat_price = findSeatPrice(current_validators - kickedout_validators + proposals, num_seats)`, where each validator gets `floor(stake[v] / seat_price)` seats and `seat_price` is highest integer number such that total number of seats is at least `num_seats`.
-5. Filter validators and proposals to only those with stake greater or equal than seat price.
-6. For every validator, replicate them by number of seats they get `floor(stake[v] / seat_price)`.
-7. Randomly shuffle (TODO: define random number sampler) with seed from randomness generated on the last block of current epoch (via `VRF(block_producer.private_key, block_hash)`).
-8. Cut off all seats which are over the `num_seats` needed.
-9. Use this set for block producers and shifting window over it as chunk producers.
-
-```python
-def findSeatPrice(stakes, num_seats):
-    """Find seat price given set of stakes and number of seats required.
-
-    Seat price is highest integer number such that if you sum `floor(stakes[i] / seat_price)` it is at least `num_seats`.
-    """
-    stakes = sorted(stakes)
-    total_stakes = sum(stakes)
-    assert total_stakes >= num_seats, "Total stakes should be above number of seats"
-    left, right = 1, total_stakes + 1
-    while True:
-        if left == right - 1:
-            return left
-        mid = (left + right) // 2
-        sum = 0
-        for stake in stakes:
-            sum += stake // mid
-            if sum >= num_seats:
-                left = mid
-                break
-        right = mid
-```
+3. Collect chunk-only and block producer `proposals`, if validator was also a validator in `epoch[T]`, considered stake of the proposal is `0 if proposal.stake == 0 else proposal.stake + reward[proposal.account_id]`.
+4. Use the chunk/block producer selection algorithms outlined in [Selecting Chunk and Block Producers](ChainSpec/SelectingBlockProducers.md).
 
 ### Validator Rewards Calculation
 
@@ -183,6 +146,9 @@ treasury_reward[t] = floor(reward[t] * protocol_reward_rate)
 validator_reward[t] = total_reward[t] - treasury_reward[t]
 ```
 
+The validator reward is split between block producers and chunk only producers. A fraction `f` is given to block producers,
+while the remainder is given to chunk-only producers (i.e. validators who were not block producers).
+
 Validators that didn't meet the threshold for either blocks or chunks get kicked out and don't get any reward, otherwise uptime
 of a validator is computed:
 
@@ -199,7 +165,8 @@ Where `expected_produced_blocks` and `expected_produced_chunks` is the number of
 The specific `validator[t][j]` reward for epoch `t` is then proportional to the fraction of stake of this validator from total stake:
 
 ```python
-validatorReward[t][j] = floor(uptime[t][j] * stake[t][j] * validator_reward[t] / total_stake[t])
+blockProducerReward[t][j] = floor(uptime[t][j] * stake[t][j] * f * validator_reward[t] / total_stake[t])
+chunkOnlyProducerReward[t][j] = floor(uptime[t][j] * stake[t][j] * (1 - f) * validator_reward[t] / total_stake[t])
 ```
 
 ### Slashing
