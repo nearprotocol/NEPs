@@ -20,11 +20,18 @@ type ProtocolVersion = u32;
 
 ## Client versioning
 
-Clients should follow [semantic versioning](https://semver.org/).
+Clients should follow [semantic versioning](https://semver.org/). Our client is available both as an executable and as a library. We keep their versions in sync since executable is just a command line parser over the library.
+
 Specifically:
- - MAJOR version defines protocol releases.
- - MINOR version defines changes that are client specific but require database migration, change of config or something similar. This includes client-specific features. Client should execute migrations on start, by detecting that information on disk is produced by previous version and auto-migrate it to new one.
-  - PATCH version defines when bug fixes, which should not require migrations or protocol changes.
+ - MAJOR version defines non-backward compatible API and behavior changes. Specifically, if any kind of old client input produces different output on the new client, whether it is used an executable or a library. Whether it is being used by another client implementation, a third-party service, like bridge, wallet, or by another Rust crate, e.g. for Explorer Indexer. Examples of executable client input: RPC requests (including contract calls), incoming network messages, disk storage. Examples of executable client output: RPC responses, outgoing network messages, modifications to disk storage. Examples of library client input: messages send to publicly accessible actors. Examples of library client output: messages received from publicly accessible actors. Non-intuitive examples of when MAJOR version update is needed:
+   - Anything that requires database migration, even if client self-migrates its database;
+   - Error format of the RPC, including compilation errors. Which implies that major updates to Wasm runtime can cause version bump, even if they do not change the protocol;
+   - The way publicly accessible actors handle messages;
+   - When client changes its behavior after X's block -- delayed non-backward compatible API and behavior change, which includes most of the protocol changes.
+- MINOR version defines backward compatible API and behavior changes, this mostly applies to extensions Non-intuitive examples of when MINOR version upgrade is needed:
+   - New RPC endpoints;
+   - Additional optional storage columns, e.g. on-disk cache.
+- PATCH version is for anything that does not change client input/output. This includes bug fixes and performance improvements.
 
 Clients can define how current version of data is stored and migrations applied.
 General recommendation is to store version in the database and on binary start, check version of database and perform required migrations.
