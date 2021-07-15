@@ -1,0 +1,482 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Fungible Token - NEAR Protocol Specification</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Specification of the NEAR Protocol">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../Terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li class="chapter-item expanded "><a href="../../DataStructures/README.html"><strong aria-hidden="true">3.</strong> Data Structures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../DataStructures/Account.html"><strong aria-hidden="true">3.1.</strong> Account</a></li><li class="chapter-item expanded "><a href="../../DataStructures/AccessKey.html"><strong aria-hidden="true">3.2.</strong> Access Key</a></li><li class="chapter-item expanded "><a href="../../DataStructures/Transaction.html"><strong aria-hidden="true">3.3.</strong> Transaction</a></li></ol></li><li class="chapter-item expanded "><a href="../../Architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="../../ChainSpec/README.html"><strong aria-hidden="true">5.</strong> Chain specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../ChainSpec/Consensus.html"><strong aria-hidden="true">5.1.</strong> Consensus</a></li><li class="chapter-item expanded "><a href="../../ChainSpec/Upgradability.html"><strong aria-hidden="true">5.2.</strong> Upgradability</a></li><li class="chapter-item expanded "><a href="../../ChainSpec/Transactions.html"><strong aria-hidden="true">5.3.</strong> Transactions</a></li><li class="chapter-item expanded "><a href="../../ChainSpec/LightClient.html"><strong aria-hidden="true">5.4.</strong> Light Client</a></li></ol></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/README.html"><strong aria-hidden="true">6.</strong> Runtime specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../RuntimeSpec/Runtime.html"><strong aria-hidden="true">6.1.</strong> Runtime</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/FunctionCall.html"><strong aria-hidden="true">6.2.</strong> FunctionCall</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Transactions.html"><strong aria-hidden="true">6.3.</strong> Transactions</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Actions.html"><strong aria-hidden="true">6.4.</strong> Actions</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Receipts.html"><strong aria-hidden="true">6.5.</strong> Receipts</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Refunds.html"><strong aria-hidden="true">6.6.</strong> Refunds</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Scenarios/Scenarios.html"><strong aria-hidden="true">6.7.</strong> Scenarios</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../RuntimeSpec/Scenarios/FinancialTransaction.html"><strong aria-hidden="true">6.7.1.</strong> Financial Transaction</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Scenarios/CrossContractCall.html"><strong aria-hidden="true">6.7.2.</strong> Cross-Contract Call</a></li></ol></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/Components.html"><strong aria-hidden="true">6.8.</strong> Components</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/RuntimeCrate.html"><strong aria-hidden="true">6.8.1.</strong> Runtime crate</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/BindingsSpec/BindingsSpec.html"><strong aria-hidden="true">6.8.2.</strong> Bindings Specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/BindingsSpec/RegistersAPI.html"><strong aria-hidden="true">6.8.2.1.</strong> Registers API</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/BindingsSpec/TrieAPI.html"><strong aria-hidden="true">6.8.2.2.</strong> Trie API</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/BindingsSpec/PromisesAPI.html"><strong aria-hidden="true">6.8.2.3.</strong> Promises API</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/BindingsSpec/ContextAPI.html"><strong aria-hidden="true">6.8.2.4.</strong> Context API</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/BindingsSpec/EconomicsAPI.html"><strong aria-hidden="true">6.8.2.5.</strong> Economics API</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/BindingsSpec/MathAPI.html"><strong aria-hidden="true">6.8.2.6.</strong> Math API</a></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/BindingsSpec/MiscellaneousAPI.html"><strong aria-hidden="true">6.8.2.7.</strong> Miscellaneous API</a></li></ol></li><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/Precompiles/README.html"><strong aria-hidden="true">6.8.3.</strong> Pre-compiles</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../RuntimeSpec/Components/Precompiles/EVM.html"><strong aria-hidden="true">6.8.3.1.</strong> EVM</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../GenesisConfig/GenesisConfig.html"><strong aria-hidden="true">7.</strong> GenesisConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../GenesisConfig/RuntimeConfig.html"><strong aria-hidden="true">7.1.</strong> RuntimeConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../GenesisConfig/RuntimeFeeConfig.html"><strong aria-hidden="true">7.1.1.</strong> RuntimeFeeConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../GenesisConfig/RuntimeFeeConfig/AccessKeyCreationConfig.html"><strong aria-hidden="true">7.1.1.1.</strong> AccessKeyCreationConfig</a></li><li class="chapter-item expanded "><a href="../../GenesisConfig/RuntimeFeeConfig/ActionCreationConfig.html"><strong aria-hidden="true">7.1.1.2.</strong> ActionCreationConfig</a></li><li class="chapter-item expanded "><a href="../../GenesisConfig/RuntimeFeeConfig/DataReceiptCreationConfig.html"><strong aria-hidden="true">7.1.1.3.</strong> DataReceiptCreationConfig</a></li><li class="chapter-item expanded "><a href="../../GenesisConfig/RuntimeFeeConfig/StorageUsageConfig.html"><strong aria-hidden="true">7.1.1.4.</strong> StorageUsageConfig</a></li><li class="chapter-item expanded "><a href="../../GenesisConfig/RuntimeFeeConfig/Fee.html"><strong aria-hidden="true">7.1.1.5.</strong> Fee</a></li><li class="chapter-item expanded "><a href="../../GenesisConfig/RuntimeFeeConfig/Fraction.html"><strong aria-hidden="true">7.1.1.6.</strong> Fraction</a></li></ol></li><li class="chapter-item expanded "><a href="../../GenesisConfig/VMConfig.html"><strong aria-hidden="true">7.1.2.</strong> VMConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../GenesisConfig/ExtCostsConfig.html"><strong aria-hidden="true">7.1.2.1.</strong> ExtCostsConfig</a></li></ol></li><li class="chapter-item expanded "><a href="../../GenesisConfig/StateRecord.html"><strong aria-hidden="true">7.1.3.</strong> StateRecord</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../Economics/README.html"><strong aria-hidden="true">8.</strong> Economics</a></li><li class="chapter-item expanded "><a href="../../Standards/README.html"><strong aria-hidden="true">9.</strong> Standards</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../Standards/Tokens/FungibleToken.html" class="active"><strong aria-hidden="true">9.1.</strong> Fungible Token</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NEAR Protocol Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#fungible-token" id="fungible-token">Fungible Token</a></h1>
+<p>Version <code>0.2.0</code></p>
+<h2><a class="header" href="#summary" id="summary">Summary</a></h2>
+<p>A standard interface for fungible tokens allowing for ownership, escrow and transfer, specifically targeting third-party marketplace integration.</p>
+<h2><a class="header" href="#changelog" id="changelog">Changelog</a></h2>
+<h3><a class="header" href="#020" id="020"><code>0.2.0</code></a></h3>
+<ul>
+<li>Introduce storage deposits. Make every change method payable (able receive attached deposits with the function calls). It requires the caller to attach enough deposit to cover potential storage increase. See <a href="https://github.com/near/core-contracts/issues/47">core-contracts/#47</a></li>
+<li>Replace <code>set_allowance</code> with <code>inc_allowance</code> and <code>dec_allowance</code> to address the issue of allowance front-running. See <a href="https://github.com/near/core-contracts/issues/49">core-contracts/#49</a></li>
+<li>Validate <code>owner_id</code> account ID. See <a href="https://github.com/near/core-contracts/issues/54">core-contracts/#54</a></li>
+<li>Enforce that the <code>new_owner_id</code> is different from the current <code>owner_id</code> for transfer. See <a href="https://github.com/near/core-contracts/issues/55">core-contracts/#55</a></li>
+</ul>
+<h2><a class="header" href="#motivation" id="motivation">Motivation</a></h2>
+<p>NEAR Protocol uses an asynchronous sharded Runtime. This means the following:</p>
+<ul>
+<li>Storage for different contracts and accounts can be located on the different shards.</li>
+<li>Two contracts can be executed at the same time in different shards.</li>
+</ul>
+<p>While this increases the transaction throughput linearly with the number of shards, it also creates some challenges for cross-contract development.
+For example, if one contract wants to query some information from the state of another contract (e.g. current balance), by the time the first contract receive the balance the real balance can change.
+It means in the async system, a contract can't rely on the state of other contract and assume it's not going to change.</p>
+<p>Instead the contract can rely on temporary partial lock of the state with a callback to act or unlock, but it requires careful engineering to avoid dead locks.
+In this standard we're trying to avoid enforcing locks, since most actions can still be completed without locks by transferring ownership to an escrow account.</p>
+<p>Prior art:</p>
+<ul>
+<li><a href="https://eips.ethereum.org/EIPS/eip-20">ERC-20 standard</a></li>
+<li>NEP#4 NEAR NFT standard: <a href="https://github.com/nearprotocol/neps/pull/4">nearprotocol/neps#4</a></li>
+<li>For latest lock proposals see <a href="https://github.com/nearprotocol/neps/pull/26">Safes (#26)</a></li>
+</ul>
+<h2><a class="header" href="#guide-level-explanation" id="guide-level-explanation">Guide-level explanation</a></h2>
+<p>We should be able to do the following:</p>
+<ul>
+<li>Initialize contract once. The given total supply will be owned by the given account ID.</li>
+<li>Get the total supply.</li>
+<li>Transfer tokens to a new user.</li>
+<li>Set a given allowance for an escrow account ID.
+<ul>
+<li>Escrow will be able to transfer up this allowance from your account.</li>
+<li>Get current balance for a given account ID.</li>
+</ul>
+</li>
+<li>Transfer tokens from one user to another.</li>
+<li>Get the current allowance for an escrow account on behalf of the balance owner. This should only be used in the UI, since a contract shouldn't rely on this temporary information.</li>
+</ul>
+<p>There are a few concepts in the scenarios above:</p>
+<ul>
+<li><strong>Total supply</strong>. It's the total number of tokens in circulation.</li>
+<li><strong>Balance owner</strong>. An account ID that owns some amount of tokens.</li>
+<li><strong>Balance</strong>. Some amount of tokens.</li>
+<li><strong>Transfer</strong>. Action that moves some amount from one account to another account.</li>
+<li><strong>Escrow</strong>. A different account from the balance owner who has permission to use some amount of tokens.</li>
+<li><strong>Allowance</strong>. The amount of tokens an escrow account can use on behalf of the account owner.</li>
+</ul>
+<p>Note, that the precision is not part of the default standard, since it's not required to perform actions. The minimum
+value is always 1 token.</p>
+<p>The standard acknowledges NEAR storage staking model and accounts for the difference in storage that can be introduced
+by actions on this contract. Since multiple users use the contract, the contract has to account for potential
+storage increase. Thus every change method of the contract that can change the amount of storage must be payable.
+See reference implementation for storage deposits and refunds.</p>
+<h3><a class="header" href="#simple-transfer" id="simple-transfer">Simple transfer</a></h3>
+<p>Alice wants to send 5 wBTC tokens to Bob.</p>
+<p><strong>Assumptions</strong></p>
+<ul>
+<li>The wBTC token contract is <code>wbtc</code>.</li>
+<li>Alice's account is <code>alice</code>.</li>
+<li>Bob's account is <code>bob</code>.</li>
+<li>The precision on wBTC contract is <code>10^8</code>.</li>
+<li>The 5 tokens is <code>5 * 10^8</code> or as a number is <code>500000000</code>.</li>
+</ul>
+<p><strong>High-level explanation</strong></p>
+<p>Alice needs to issue one transaction to wBTC contract to transfer 5 tokens (multiplied by precision) to Bob.</p>
+<p><strong>Technical calls</strong></p>
+<ol>
+<li><code>alice</code> calls <code>wbtc::transfer({&quot;new_owner_id&quot;: &quot;bob&quot;, &quot;amount&quot;: &quot;500000000&quot;})</code>.</li>
+</ol>
+<h3><a class="header" href="#token-deposit-to-a-contract" id="token-deposit-to-a-contract">Token deposit to a contract</a></h3>
+<p>Alice wants to deposit 1000 DAI tokens to a compound interest contract to earn extra tokens.</p>
+<p><strong>Assumptions</strong></p>
+<ul>
+<li>The DAI token contract is <code>dai</code>.</li>
+<li>Alice's account is <code>alice</code>.</li>
+<li>The compound interest contract is <code>compound</code>.</li>
+<li>The precision on DAI contract is <code>10^18</code>.</li>
+<li>The 1000 tokens is <code>1000 * 10^18</code> or as a number is <code>1000000000000000000000</code>.</li>
+<li>The compound contract can work with multiple token types.</li>
+</ul>
+<p><strong>High-level explanation</strong></p>
+<p>Alice needs to issue 2 transactions. The first one to <code>dai</code> to set an allowance for <code>compound</code> to be able to withdraw tokens from <code>alice</code>.
+The second transaction is to the <code>compound</code> to start the deposit process. Compound will check that the DAI tokens are supported and will try to withdraw the desired amount of DAI from <code>alice</code>.</p>
+<ul>
+<li>If transfer succeeded, <code>compound</code> can increase local ownership for <code>alice</code> to 1000 DAI</li>
+<li>If transfer fails, <code>compound</code> doesn't need to do anything in current example, but maybe can notify <code>alice</code> of unsuccessful transfer.</li>
+</ul>
+<p><strong>Technical calls</strong></p>
+<ol>
+<li><code>alice</code> calls <code>dai::set_allowance({&quot;escrow_account_id&quot;: &quot;compound&quot;, &quot;allowance&quot;: &quot;1000000000000000000000&quot;})</code>.</li>
+<li><code>alice</code> calls <code>compound::deposit({&quot;token_contract&quot;: &quot;dai&quot;, &quot;amount&quot;: &quot;1000000000000000000000&quot;})</code>. During the <code>deposit</code> call, <code>compound</code> does the following:
+<ol>
+<li>makes async call <code>dai::transfer_from({&quot;owner_id&quot;: &quot;alice&quot;, &quot;new_owner_id&quot;: &quot;compound&quot;, &quot;amount&quot;: &quot;1000000000000000000000&quot;})</code>.</li>
+<li>attaches a callback <code>compound::on_transfer({&quot;owner_id&quot;: &quot;alice&quot;, &quot;token_contract&quot;: &quot;dai&quot;, &quot;amount&quot;: &quot;1000000000000000000000&quot;})</code>.</li>
+</ol>
+</li>
+</ol>
+<h3><a class="header" href="#multi-token-swap-on-dex" id="multi-token-swap-on-dex">Multi-token swap on DEX</a></h3>
+<p>Charlie wants to exchange his wLTC to wBTC on decentralized exchange contract. Alex wants to buy wLTC and has 80 wBTC.</p>
+<p><strong>Assumptions</strong></p>
+<ul>
+<li>The wLTC token contract is <code>wltc</code>.</li>
+<li>The wBTC token contract is <code>wbtc</code>.</li>
+<li>The DEX contract is <code>dex</code>.</li>
+<li>Charlie's account is <code>charlie</code>.</li>
+<li>Alex's account is <code>alex</code>.</li>
+<li>The precision on both tokens contract is <code>10^8</code>.</li>
+<li>The amount of 9001 wLTC tokens is Alex wants is <code>9001 * 10^8</code> or as a number is <code>900100000000</code>.</li>
+<li>The 80 wBTC tokens is <code>80 * 10^8</code> or as a number is <code>8000000000</code>.</li>
+<li>Charlie has 1000000 wLTC tokens which is <code>1000000 * 10^8</code> or as a number is <code>100000000000000</code></li>
+<li>Dex contract already has an open order to sell 80 wBTC tokens by <code>alex</code> towards 9001 wLTC.</li>
+<li>Without Safes implementation, DEX has to act as an escrow and hold funds of both users before it can do an exchange.</li>
+</ul>
+<p><strong>High-level explanation</strong></p>
+<p>Let's first setup open order by Alex on DEX. It's similar to <code>Token deposit to a contract</code> example above.</p>
+<ul>
+<li>Alex sets an allowance on wBTC to DEX</li>
+<li>Alex calls deposit on Dex for wBTC.</li>
+<li>Alex calls DEX to make an new sell order.</li>
+</ul>
+<p>Then Charlie comes and decides to fulfill the order by selling his wLTC to Alex on DEX.
+Charlie calls the DEX</p>
+<ul>
+<li>Charlie sets the allowance on wLTC to DEX</li>
+<li>Alex calls deposit on Dex for wLTC.</li>
+<li>Then calls DEX to take the order from Alex.</li>
+</ul>
+<p>When called, DEX makes 2 async transfers calls to exchange corresponding tokens.</p>
+<ul>
+<li>DEX calls wLTC to transfer tokens DEX to Alex.</li>
+<li>DEX calls wBTC to transfer tokens DEX to Charlie.</li>
+</ul>
+<p><strong>Technical calls</strong></p>
+<ol>
+<li><code>alex</code> calls <code>wbtc::set_allowance({&quot;escrow_account_id&quot;: &quot;dex&quot;, &quot;allowance&quot;: &quot;8000000000&quot;})</code>.</li>
+<li><code>alex</code> calls <code>dex::deposit({&quot;token&quot;: &quot;wbtc&quot;, &quot;amount&quot;: &quot;8000000000&quot;})</code>.
+<ol>
+<li><code>dex</code> calls <code>wbtc::transfer_from({&quot;owner_id&quot;: &quot;alex&quot;, &quot;new_owner_id&quot;: &quot;dex&quot;, &quot;amount&quot;: &quot;8000000000&quot;})</code></li>
+</ol>
+</li>
+<li><code>alex</code> calls <code>dex::trade({&quot;have&quot;: &quot;wbtc&quot;, &quot;have_amount&quot;: &quot;8000000000&quot;, &quot;want&quot;: &quot;wltc&quot;, &quot;want_amount&quot;: &quot;900100000000&quot;})</code>.</li>
+<li><code>charlie</code> calls <code>wltc::set_allowance({&quot;escrow_account_id&quot;: &quot;dex&quot;, &quot;allowance&quot;: &quot;100000000000000&quot;})</code>.</li>
+<li><code>charlie</code> calls <code>dex::deposit({&quot;token&quot;: &quot;wltc&quot;, &quot;amount&quot;: &quot;100000000000000&quot;})</code>.
+<ol>
+<li><code>dex</code> calls <code>wltc::transfer_from({&quot;owner_id&quot;: &quot;charlie&quot;, &quot;new_owner_id&quot;: &quot;dex&quot;, &quot;amount&quot;: &quot;100000000000000&quot;})</code></li>
+</ol>
+</li>
+<li><code>charlie</code> calls <code>dex::trade({&quot;have&quot;: &quot;wltc&quot;, &quot;have_amount&quot;: &quot;900100000000&quot;, &quot;want&quot;: &quot;wbtc&quot;, &quot;want_amount&quot;: &quot;8000000000&quot;})</code>.
+<ul>
+<li><code>dex</code> calls <code>wbtc::transfer({&quot;new_owner_id&quot;: &quot;charlie&quot;, &quot;amount&quot;: &quot;8000000000&quot;})</code></li>
+<li><code>dex</code> calls <code>wltc::transfer({&quot;new_owner_id&quot;: &quot;alex&quot;, &quot;amount&quot;: &quot;900100000000&quot;})</code></li>
+</ul>
+</li>
+</ol>
+<h2><a class="header" href="#reference-level-explanation" id="reference-level-explanation">Reference-level explanation</a></h2>
+<p>The full implementation in Rust can be found here: <a href="https://github.com/nearprotocol/near-sdk-rs/blob/master/examples/fungible-token/src/lib.rs">fungible-token</a></p>
+<p><strong>NOTES:</strong></p>
+<ul>
+<li>All amounts, balances and allowance are limited by <code>U128</code> (max value <code>2**128 - 1</code>).</li>
+<li>Token standard uses JSON for serialization of arguments and results.</li>
+<li>Amounts in arguments and results have are serialized as Base-10 strings, e.g. <code>&quot;100&quot;</code>. This is done to avoid
+JSON limitation of max integer value of <code>2**53</code>.</li>
+<li>The contract tracks the change in storage before and after the call. If the storage increases,
+the contract requires the caller of the contract to attach enough deposit to the function call
+to cover the storage cost.
+This is done to prevent a denial of service attack on the contract by taking all available storage.
+It's because the gas cost of adding new escrow account is cheap, many escrow allowances can be added until the contract
+runs out of storage.
+If the storage decreases, the contract will issue a refund for the cost of the released storage.
+The unused tokens from the attached deposit are also refunded, so it's safe to attach more deposit than required.</li>
+<li>To prevent the deployed contract from being modified or deleted, it should not have any access
+keys on its account.</li>
+</ul>
+<p>Interface:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/******************/
+/* CHANGE METHODS */
+/******************/
+
+/// Increments the `allowance` for `escrow_account_id` by `amount` on the account of the caller of this contract
+/// (`predecessor_id`) who is the balance owner.
+/// Requirements:
+/// * Caller of the method has to attach deposit enough to cover storage difference at the
+///   fixed storage price defined in the contract.
+#[payable]
+pub fn inc_allowance(&amp;mut self, escrow_account_id: AccountId, amount: U128);
+
+/// Decrements the `allowance` for `escrow_account_id` by `amount` on the account of the caller of this contract
+/// (`predecessor_id`) who is the balance owner.
+/// Requirements:
+/// * Caller of the method has to attach deposit enough to cover storage difference at the
+///   fixed storage price defined in the contract.
+#[payable]
+pub fn dec_allowance(&amp;mut self, escrow_account_id: AccountId, amount: U128);
+
+/// Transfers the `amount` of tokens from `owner_id` to the `new_owner_id`.
+/// Requirements:
+/// * `amount` should be a positive integer.
+/// * `owner_id` should have balance on the account greater or equal than the transfer `amount`.
+/// * If this function is called by an escrow account (`owner_id != predecessor_account_id`),
+///   then the allowance of the caller of the function (`predecessor_account_id`) on
+///   the account of `owner_id` should be greater or equal than the transfer `amount`.
+/// * Caller of the method has to attach deposit enough to cover storage difference at the
+///   fixed storage price defined in the contract.
+#[payable]
+pub fn transfer_from(&amp;mut self, owner_id: AccountId, new_owner_id: AccountId, amount: U128);
+
+
+/// Transfer `amount` of tokens from the caller of the contract (`predecessor_id`) to
+/// `new_owner_id`.
+/// Act the same was as `transfer_from` with `owner_id` equal to the caller of the contract
+/// (`predecessor_id`).
+/// Requirements:
+/// * Caller of the method has to attach deposit enough to cover storage difference at the
+///   fixed storage price defined in the contract.
+#[payable]
+pub fn transfer(&amp;mut self, new_owner_id: AccountId, amount: U128);
+
+/****************/
+/* VIEW METHODS */
+/****************/
+
+/// Returns total supply of tokens.
+pub fn get_total_supply(&amp;self) -&gt; U128;
+
+/// Returns balance of the `owner_id` account.
+pub fn get_balance(&amp;self, owner_id: AccountId) -&gt; U128;
+
+/// Returns current allowance of `escrow_account_id` for the account of `owner_id`.
+///
+/// NOTE: Other contracts should not rely on this information, because by the moment a contract
+/// receives this information, the allowance may already be changed by the owner.
+/// So this method should only be used on the front-end to see the current allowance.
+pub fn get_allowance(&amp;self, owner_id: AccountId, escrow_account_id: AccountId) -&gt; U128;
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#drawbacks" id="drawbacks">Drawbacks</a></h2>
+<ul>
+<li>Current interface doesn't have minting, precision (decimals), naming. But it should be done as extensions, e.g. a Precision extension.</li>
+<li>It's not possible to exchange tokens without transferring them to escrow first.</li>
+<li>It's not possible to transfer tokens to a contract with a single transaction without setting the allowance first.
+It should be possible if we introduce <code>transfer_with</code> function that transfers tokens and calls escrow contract. It needs to handle result of the execution and contracts have to be aware of this API.</li>
+</ul>
+<h2><a class="header" href="#future-possibilities" id="future-possibilities">Future possibilities</a></h2>
+<ul>
+<li>Support for multiple token types</li>
+<li>Minting and burning</li>
+<li>Precision, naming and short token name.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../Standards/README.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../Standards/README.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

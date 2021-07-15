@@ -45,6 +45,19 @@ During execution, VM does the following:
 - sets the return data
 - creates new receipts through [PromisesAPI](Components/BindingsSpec/PromisesAPI.md)
 
+## Pre-compiled contracts
+
+Pre-compiled contracts ("pre-compiles") are contracts that are natively built within the client's binary.
+
+They are identified by special `code_hash` in `Account` structure.
+When `FunctionCall` is executed, first it's checked if the account's `code_hash` is in the matching pre-compiles codes. Then instead of WASM, given pre-compile will be used.
+
+Pre-compiles should initialize with `default` and have two public function calls:
+ - `function_call(&mut self, method_name: String, args: &[u8])` to execute a function call that might change state.
+ - `view_call(&self, method_name: String, args: &[u8])` to run a view call.
+
+[See full list of pre-compiles](./Components/Precompiles/README.md)
+
 ## Output
 
 The output of the `FunctionCall`:

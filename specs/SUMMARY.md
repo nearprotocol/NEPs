@@ -36,6 +36,8 @@
       - [Economics API](RuntimeSpec/Components/BindingsSpec/EconomicsAPI.md)
       - [Math API](RuntimeSpec/Components/BindingsSpec/MathAPI.md)
       - [Miscellaneous API](RuntimeSpec/Components/BindingsSpec/MiscellaneousAPI.md)
+    - [Pre-compiles](RuntimeSpec/Components/Precompiles/README.md)
+      - [EVM](RuntimeSpec/Components/Precompiles/EVM.md)
 - [GenesisConfig](GenesisConfig/GenesisConfig.md)
   - [RuntimeConfig](GenesisConfig/RuntimeConfig.md)
     - [RuntimeFeeConfig](GenesisConfig/RuntimeFeeConfig.md)

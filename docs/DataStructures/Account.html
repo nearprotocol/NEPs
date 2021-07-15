@@ -1,0 +1,335 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Account - NEAR Protocol Specification</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Specification of the NEAR Protocol">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../Terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li class="chapter-item expanded "><a href="../DataStructures/README.html"><strong aria-hidden="true">3.</strong> Data Structures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../DataStructures/Account.html" class="active"><strong aria-hidden="true">3.1.</strong> Account</a></li><li class="chapter-item expanded "><a href="../DataStructures/AccessKey.html"><strong aria-hidden="true">3.2.</strong> Access Key</a></li><li class="chapter-item expanded "><a href="../DataStructures/Transaction.html"><strong aria-hidden="true">3.3.</strong> Transaction</a></li></ol></li><li class="chapter-item expanded "><a href="../Architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="../ChainSpec/README.html"><strong aria-hidden="true">5.</strong> Chain specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ChainSpec/Consensus.html"><strong aria-hidden="true">5.1.</strong> Consensus</a></li><li class="chapter-item expanded "><a href="../ChainSpec/Upgradability.html"><strong aria-hidden="true">5.2.</strong> Upgradability</a></li><li class="chapter-item expanded "><a href="../ChainSpec/Transactions.html"><strong aria-hidden="true">5.3.</strong> Transactions</a></li><li class="chapter-item expanded "><a href="../ChainSpec/LightClient.html"><strong aria-hidden="true">5.4.</strong> Light Client</a></li></ol></li><li class="chapter-item expanded "><a href="../RuntimeSpec/README.html"><strong aria-hidden="true">6.</strong> Runtime specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../RuntimeSpec/Runtime.html"><strong aria-hidden="true">6.1.</strong> Runtime</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/FunctionCall.html"><strong aria-hidden="true">6.2.</strong> FunctionCall</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Transactions.html"><strong aria-hidden="true">6.3.</strong> Transactions</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Actions.html"><strong aria-hidden="true">6.4.</strong> Actions</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Receipts.html"><strong aria-hidden="true">6.5.</strong> Receipts</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Refunds.html"><strong aria-hidden="true">6.6.</strong> Refunds</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Scenarios/Scenarios.html"><strong aria-hidden="true">6.7.</strong> Scenarios</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../RuntimeSpec/Scenarios/FinancialTransaction.html"><strong aria-hidden="true">6.7.1.</strong> Financial Transaction</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Scenarios/CrossContractCall.html"><strong aria-hidden="true">6.7.2.</strong> Cross-Contract Call</a></li></ol></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/Components.html"><strong aria-hidden="true">6.8.</strong> Components</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/RuntimeCrate.html"><strong aria-hidden="true">6.8.1.</strong> Runtime crate</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/BindingsSpec/BindingsSpec.html"><strong aria-hidden="true">6.8.2.</strong> Bindings Specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/BindingsSpec/RegistersAPI.html"><strong aria-hidden="true">6.8.2.1.</strong> Registers API</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/BindingsSpec/TrieAPI.html"><strong aria-hidden="true">6.8.2.2.</strong> Trie API</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/BindingsSpec/PromisesAPI.html"><strong aria-hidden="true">6.8.2.3.</strong> Promises API</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/BindingsSpec/ContextAPI.html"><strong aria-hidden="true">6.8.2.4.</strong> Context API</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/BindingsSpec/EconomicsAPI.html"><strong aria-hidden="true">6.8.2.5.</strong> Economics API</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/BindingsSpec/MathAPI.html"><strong aria-hidden="true">6.8.2.6.</strong> Math API</a></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/BindingsSpec/MiscellaneousAPI.html"><strong aria-hidden="true">6.8.2.7.</strong> Miscellaneous API</a></li></ol></li><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/Precompiles/README.html"><strong aria-hidden="true">6.8.3.</strong> Pre-compiles</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../RuntimeSpec/Components/Precompiles/EVM.html"><strong aria-hidden="true">6.8.3.1.</strong> EVM</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../GenesisConfig/GenesisConfig.html"><strong aria-hidden="true">7.</strong> GenesisConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../GenesisConfig/RuntimeConfig.html"><strong aria-hidden="true">7.1.</strong> RuntimeConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../GenesisConfig/RuntimeFeeConfig.html"><strong aria-hidden="true">7.1.1.</strong> RuntimeFeeConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../GenesisConfig/RuntimeFeeConfig/AccessKeyCreationConfig.html"><strong aria-hidden="true">7.1.1.1.</strong> AccessKeyCreationConfig</a></li><li class="chapter-item expanded "><a href="../GenesisConfig/RuntimeFeeConfig/ActionCreationConfig.html"><strong aria-hidden="true">7.1.1.2.</strong> ActionCreationConfig</a></li><li class="chapter-item expanded "><a href="../GenesisConfig/RuntimeFeeConfig/DataReceiptCreationConfig.html"><strong aria-hidden="true">7.1.1.3.</strong> DataReceiptCreationConfig</a></li><li class="chapter-item expanded "><a href="../GenesisConfig/RuntimeFeeConfig/StorageUsageConfig.html"><strong aria-hidden="true">7.1.1.4.</strong> StorageUsageConfig</a></li><li class="chapter-item expanded "><a href="../GenesisConfig/RuntimeFeeConfig/Fee.html"><strong aria-hidden="true">7.1.1.5.</strong> Fee</a></li><li class="chapter-item expanded "><a href="../GenesisConfig/RuntimeFeeConfig/Fraction.html"><strong aria-hidden="true">7.1.1.6.</strong> Fraction</a></li></ol></li><li class="chapter-item expanded "><a href="../GenesisConfig/VMConfig.html"><strong aria-hidden="true">7.1.2.</strong> VMConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../GenesisConfig/ExtCostsConfig.html"><strong aria-hidden="true">7.1.2.1.</strong> ExtCostsConfig</a></li></ol></li><li class="chapter-item expanded "><a href="../GenesisConfig/StateRecord.html"><strong aria-hidden="true">7.1.3.</strong> StateRecord</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../Economics/README.html"><strong aria-hidden="true">8.</strong> Economics</a></li><li class="chapter-item expanded "><a href="../Standards/README.html"><strong aria-hidden="true">9.</strong> Standards</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../Standards/Tokens/FungibleToken.html"><strong aria-hidden="true">9.1.</strong> Fungible Token</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NEAR Protocol Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#accounts" id="accounts">Accounts</a></h1>
+<h2><a class="header" href="#account-id" id="account-id">Account ID</a></h2>
+<p>NEAR Protocol has an account names system. Account ID is similar to a username. Account IDs have to follow the rules.</p>
+<h3><a class="header" href="#account-id-rules" id="account-id-rules">Account ID Rules</a></h3>
+<ul>
+<li>minimum length is 2</li>
+<li>maximum length is 64</li>
+<li><strong>Account ID</strong> consists of <strong>Account ID parts</strong> separated by <code>.</code></li>
+<li><strong>Account ID part</strong> consists of lowercase alphanumeric symbols separated by either <code>_</code> or <code>-</code>.</li>
+</ul>
+<p>Account names are similar to a domain names.
+Anyone can create a top level account (TLA) without separators, e.g. <code>near</code>.
+Only <code>near</code> can create <code>alice.near</code>. And only <code>alice.near</code> can create <code>app.alice.near</code> and so on.
+Note, <code>near</code> can NOT create <code>app.alice.near</code> directly.</p>
+<p>Regex for a full account ID, without checking for length:</p>
+<pre><code class="language-regex">^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$
+</code></pre>
+<h3><a class="header" href="#top-level-accounts" id="top-level-accounts">Top Level Accounts</a></h3>
+<table><thead><tr><th>Name</th><th>Value</th></tr></thead><tbody>
+<tr><td>REGISTRAR_ACCOUNT_ID</td><td><code>registrar</code></td></tr>
+<tr><td>MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH</td><td>32</td></tr>
+</tbody></table>
+<p>Top level account names (TLAs) are very valuable as they provide root of trust and discoverability for companies, applications and users.
+To allow for fair access to them, the top level account names that are shorter than <code>MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH</code> characters going to be auctioned off.</p>
+<p>Specifically, only <code>REGISTRAR_ACCOUNT_ID</code> account can create new top level accounts that are shorter than <code>MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH</code> characters. <code>REGISTRAR_ACCOUNT_ID</code> implements standard Account Naming (link TODO) interface to allow create new accounts.</p>
+<pre><code class="language-python">def action_create_account(predecessor_id, account_id):
+    &quot;&quot;&quot;Called on CreateAccount action in receipt.&quot;&quot;&quot;
+    if len(account_id) &lt; MIN_ALLOWED_TOP_LEVEL_ACCOUNT_LENGTH and predecessor_id != REGISTRAR_ACCOUNT_ID:
+        raise CreateAccountOnlyByRegistrar(account_id, REGISTRAR_ACCOUNT_ID, predecessor_id)
+    # Otherwise, create account with given `account_id`.
+</code></pre>
+<p><em>Note: we are not going to deploy <code>registrar</code> auction at launch, instead allow to deploy it by Foundation after initial launch. The link to details of the auction will be added here in the next spec release post MainNet.</em></p>
+<h3><a class="header" href="#examples" id="examples">Examples</a></h3>
+<p>Valid accounts:</p>
+<pre><code>ok
+bowen
+ek-2
+ek.near
+com
+google.com
+bowen.google.com
+near
+illia.cheap-accounts.near
+max_99.near
+100
+near2019
+over.9000
+a.bro
+// Valid, but can't be created, because &quot;a&quot; is too short
+bro.a
+</code></pre>
+<p>Invalid accounts:</p>
+<pre><code>not ok           // Whitespace characters are not allowed
+a                // Too short
+100-             // Suffix separator
+bo__wen          // Two separators in a row
+_illia           // Prefix separator
+.near            // Prefix dot separator
+near.            // Suffix dot separator
+a..near          // Two dot separators in a row
+$$$              // Non alphanumeric characters are not allowed
+WAT              // Non lowercase characters are not allowed
+me@google.com    // @ is not allowed (it was allowed in the past)
+// TOO LONG:
+abcdefghijklmnopqrstuvwxyz.abcdefghijklmnopqrstuvwxyz.abcdefghijklmnopqrstuvwxyz
+</code></pre>
+<h2><a class="header" href="#account" id="account">Account</a></h2>
+<p>Data for an single account is collocated in one shard. The account data consists of the following:</p>
+<ul>
+<li>Balance</li>
+<li>Locked balance (for staking)</li>
+<li>Code of the contract</li>
+<li>Key-value storage of the contract. Stored in a ordered trie</li>
+<li><a href="AccessKey.html">Access Keys</a></li>
+<li><a href="../Runtime/Receipts.html#postponed-actionreceipt">Postponed ActionReceipts</a></li>
+<li><a href="../Runtime/Receipts.html#received-datareceipt">Received DataReceipts</a></li>
+</ul>
+<h4><a class="header" href="#balances" id="balances">Balances</a></h4>
+<p>Total account balance consists of unlocked balance and locked balance.</p>
+<p>Unlocked balance is tokens that the account can use for transaction fees, transfers staking and other operations.</p>
+<p>Locked balance is the tokens that are currently in use for staking to be a validator or to become a validator.
+Locked balance may become unlocked at the beginning of an epoch. See [Staking] for details.</p>
+<h4><a class="header" href="#contracts" id="contracts">Contracts</a></h4>
+<p>A contract (AKA smart contract) is a program in WebAssembly that belongs to a specific account.
+When account is created, it doesn't have a contract.
+A contract has to be explicitly deployed, either by the account owner, or during the account creation.
+A contract can be executed by anyone who calls a method on your account. A contract has access to the storage on your account.</p>
+<h4><a class="header" href="#storage" id="storage">Storage</a></h4>
+<p>Every account has its own storage. It's a persistent key-value trie. Keys are ordered in lexicographical order.
+The storage can only be modified by the contract on the account.
+Current implementation on Runtime only allows your account's contract to read from the storage, but this might change in the future and other accounts's contracts will be able to read from your storage.</p>
+<p>NOTE: Accounts are charged recurrent rent for the total storage. This includes storage of the account itself, contract code, contract storage and all access keys.</p>
+<h4><a class="header" href="#access-keys" id="access-keys">Access Keys</a></h4>
+<p>An access key grants an access to a account. Each access key on the account is identified by a unique public key.
+This public key is used to validate signature of transactions.
+Each access key contains a unique nonce to differentiate or order transactions signed with this access key.</p>
+<p>An access keys have a permission associated with it. The permission can be one of two types:</p>
+<ul>
+<li>Full permission. It grants full access to the account.</li>
+<li>Function call permission. It grants access to only issue function call transactions.</li>
+</ul>
+<p>See [Access Keys] for more details.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../DataStructures/README.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../DataStructures/AccessKey.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../DataStructures/README.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../DataStructures/AccessKey.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

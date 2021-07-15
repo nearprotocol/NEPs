@@ -1,0 +1,588 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Promises API - NEAR Protocol Specification</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Specification of the NEAR Protocol">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../../favicon.png">
+        
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../../Terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li class="chapter-item expanded "><a href="../../../DataStructures/README.html"><strong aria-hidden="true">3.</strong> Data Structures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../DataStructures/Account.html"><strong aria-hidden="true">3.1.</strong> Account</a></li><li class="chapter-item expanded "><a href="../../../DataStructures/AccessKey.html"><strong aria-hidden="true">3.2.</strong> Access Key</a></li><li class="chapter-item expanded "><a href="../../../DataStructures/Transaction.html"><strong aria-hidden="true">3.3.</strong> Transaction</a></li></ol></li><li class="chapter-item expanded "><a href="../../../Architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="../../../ChainSpec/README.html"><strong aria-hidden="true">5.</strong> Chain specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../ChainSpec/Consensus.html"><strong aria-hidden="true">5.1.</strong> Consensus</a></li><li class="chapter-item expanded "><a href="../../../ChainSpec/Upgradability.html"><strong aria-hidden="true">5.2.</strong> Upgradability</a></li><li class="chapter-item expanded "><a href="../../../ChainSpec/Transactions.html"><strong aria-hidden="true">5.3.</strong> Transactions</a></li><li class="chapter-item expanded "><a href="../../../ChainSpec/LightClient.html"><strong aria-hidden="true">5.4.</strong> Light Client</a></li></ol></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/README.html"><strong aria-hidden="true">6.</strong> Runtime specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Runtime.html"><strong aria-hidden="true">6.1.</strong> Runtime</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/FunctionCall.html"><strong aria-hidden="true">6.2.</strong> FunctionCall</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Transactions.html"><strong aria-hidden="true">6.3.</strong> Transactions</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Actions.html"><strong aria-hidden="true">6.4.</strong> Actions</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Receipts.html"><strong aria-hidden="true">6.5.</strong> Receipts</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Refunds.html"><strong aria-hidden="true">6.6.</strong> Refunds</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Scenarios/Scenarios.html"><strong aria-hidden="true">6.7.</strong> Scenarios</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Scenarios/FinancialTransaction.html"><strong aria-hidden="true">6.7.1.</strong> Financial Transaction</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Scenarios/CrossContractCall.html"><strong aria-hidden="true">6.7.2.</strong> Cross-Contract Call</a></li></ol></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/Components.html"><strong aria-hidden="true">6.8.</strong> Components</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/RuntimeCrate.html"><strong aria-hidden="true">6.8.1.</strong> Runtime crate</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/BindingsSpec/BindingsSpec.html"><strong aria-hidden="true">6.8.2.</strong> Bindings Specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/BindingsSpec/RegistersAPI.html"><strong aria-hidden="true">6.8.2.1.</strong> Registers API</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/BindingsSpec/TrieAPI.html"><strong aria-hidden="true">6.8.2.2.</strong> Trie API</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/BindingsSpec/PromisesAPI.html" class="active"><strong aria-hidden="true">6.8.2.3.</strong> Promises API</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/BindingsSpec/ContextAPI.html"><strong aria-hidden="true">6.8.2.4.</strong> Context API</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/BindingsSpec/EconomicsAPI.html"><strong aria-hidden="true">6.8.2.5.</strong> Economics API</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/BindingsSpec/MathAPI.html"><strong aria-hidden="true">6.8.2.6.</strong> Math API</a></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/BindingsSpec/MiscellaneousAPI.html"><strong aria-hidden="true">6.8.2.7.</strong> Miscellaneous API</a></li></ol></li><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/Precompiles/README.html"><strong aria-hidden="true">6.8.3.</strong> Pre-compiles</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../RuntimeSpec/Components/Precompiles/EVM.html"><strong aria-hidden="true">6.8.3.1.</strong> EVM</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../../GenesisConfig/GenesisConfig.html"><strong aria-hidden="true">7.</strong> GenesisConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../GenesisConfig/RuntimeConfig.html"><strong aria-hidden="true">7.1.</strong> RuntimeConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../GenesisConfig/RuntimeFeeConfig.html"><strong aria-hidden="true">7.1.1.</strong> RuntimeFeeConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../GenesisConfig/RuntimeFeeConfig/AccessKeyCreationConfig.html"><strong aria-hidden="true">7.1.1.1.</strong> AccessKeyCreationConfig</a></li><li class="chapter-item expanded "><a href="../../../GenesisConfig/RuntimeFeeConfig/ActionCreationConfig.html"><strong aria-hidden="true">7.1.1.2.</strong> ActionCreationConfig</a></li><li class="chapter-item expanded "><a href="../../../GenesisConfig/RuntimeFeeConfig/DataReceiptCreationConfig.html"><strong aria-hidden="true">7.1.1.3.</strong> DataReceiptCreationConfig</a></li><li class="chapter-item expanded "><a href="../../../GenesisConfig/RuntimeFeeConfig/StorageUsageConfig.html"><strong aria-hidden="true">7.1.1.4.</strong> StorageUsageConfig</a></li><li class="chapter-item expanded "><a href="../../../GenesisConfig/RuntimeFeeConfig/Fee.html"><strong aria-hidden="true">7.1.1.5.</strong> Fee</a></li><li class="chapter-item expanded "><a href="../../../GenesisConfig/RuntimeFeeConfig/Fraction.html"><strong aria-hidden="true">7.1.1.6.</strong> Fraction</a></li></ol></li><li class="chapter-item expanded "><a href="../../../GenesisConfig/VMConfig.html"><strong aria-hidden="true">7.1.2.</strong> VMConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../GenesisConfig/ExtCostsConfig.html"><strong aria-hidden="true">7.1.2.1.</strong> ExtCostsConfig</a></li></ol></li><li class="chapter-item expanded "><a href="../../../GenesisConfig/StateRecord.html"><strong aria-hidden="true">7.1.3.</strong> StateRecord</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../../Economics/README.html"><strong aria-hidden="true">8.</strong> Economics</a></li><li class="chapter-item expanded "><a href="../../../Standards/README.html"><strong aria-hidden="true">9.</strong> Standards</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../Standards/Tokens/FungibleToken.html"><strong aria-hidden="true">9.1.</strong> Fungible Token</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NEAR Protocol Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#promises-api" id="promises-api">Promises API</a></h1>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_create(account_id_len: u64,
+               account_id_ptr: u64,
+               method_name_len: u64,
+               method_name_ptr: u64,
+               arguments_len: u64,
+               arguments_ptr: u64,
+               amount_ptr: u64,
+               gas: u64) -&gt; u64
+<span class="boring">}
+</span></code></pre></pre>
+<p>Creates a promise that will execute a method on account with given arguments and attaches the given amount.
+<code>amount_ptr</code> point to slices of bytes representing <code>u128</code>.</p>
+<h6><a class="header" href="#panics" id="panics">Panics</a></h6>
+<ul>
+<li>If <code>account_id_len + account_id_ptr</code> or <code>method_name_len + method_name_ptr</code> or <code>arguments_len + arguments_ptr</code>
+or <code>amount_ptr + 16</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<h6><a class="header" href="#returns" id="returns">Returns</a></h6>
+<ul>
+<li>Index of the new promise that uniquely identifies it within the current execution of the method.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_then(promise_idx: u64,
+             account_id_len: u64,
+             account_id_ptr: u64,
+             method_name_len: u64,
+             method_name_ptr: u64,
+             arguments_len: u64,
+             arguments_ptr: u64,
+             amount_ptr: u64,
+             gas: u64) -&gt; u64
+<span class="boring">}
+</span></code></pre></pre>
+<p>Attaches the callback that is executed after promise pointed by <code>promise_idx</code> is complete.</p>
+<h6><a class="header" href="#panics-1" id="panics-1">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If <code>account_id_len + account_id_ptr</code> or <code>method_name_len + method_name_ptr</code> or <code>arguments_len + arguments_ptr</code>
+or <code>amount_ptr + 16</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<h6><a class="header" href="#returns-1" id="returns-1">Returns</a></h6>
+<ul>
+<li>Index of the new promise that uniquely identifies it within the current execution of the method.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_and(promise_idx_ptr: u64, promise_idx_count: u64) -&gt; u64
+<span class="boring">}
+</span></code></pre></pre>
+<p>Creates a new promise which completes when time all promises passed as arguments complete. Cannot be used with registers.
+<code>promise_idx_ptr</code> points to an array of <code>u64</code> elements, with <code>promise_idx_count</code> denoting the number of elements.
+The array contains indices of promises that need to be waited on jointly.</p>
+<h6><a class="header" href="#panics-2" id="panics-2">Panics</a></h6>
+<ul>
+<li>If <code>promise_ids_ptr + 8 * promise_idx_count</code> extend outside the guest memory with <code>MemoryAccessViolation</code>;</li>
+<li>If any of the promises in the array do not correspond to existing promises panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<h6><a class="header" href="#returns-2" id="returns-2">Returns</a></h6>
+<ul>
+<li>Index of the new promise that uniquely identifies it within the current execution of the method.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_results_count() -&gt; u64
+<span class="boring">}
+</span></code></pre></pre>
+<p>If the current function is invoked by a callback we can access the execution results of the promises that
+caused the callback. This function returns the number of complete and incomplete callbacks.</p>
+<p>Note, we are only going to have incomplete callbacks once we have <code>promise_or</code> combinator.</p>
+<h6><a class="header" href="#normal-execution" id="normal-execution">Normal execution</a></h6>
+<ul>
+<li>If there is only one callback <code>promise_results_count()</code> returns <code>1</code>;</li>
+<li>If there are multiple callbacks (e.g. created through <code>promise_and</code>) <code>promise_results_count()</code> returns their number.</li>
+<li>If the function was called not through the callback <code>promise_results_count()</code> returns <code>0</code>.</li>
+</ul>
+<h6><a class="header" href="#panics-3" id="panics-3">Panics</a></h6>
+<ul>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_result(result_idx: u64, register_id: u64) -&gt; u64
+<span class="boring">}
+</span></code></pre></pre>
+<p>If the current function is invoked by a callback we can access the execution results of the promises that
+caused the callback. This function returns the result in blob format and places it into the register.</p>
+<h6><a class="header" href="#normal-execution-1" id="normal-execution-1">Normal execution</a></h6>
+<ul>
+<li>If promise result is complete and successful copies its blob into the register;</li>
+<li>If promise result is complete and failed or incomplete keeps register unused;</li>
+</ul>
+<h6><a class="header" href="#returns-3" id="returns-3">Returns</a></h6>
+<ul>
+<li>If promise result is not complete returns <code>0</code>;</li>
+<li>If promise result is complete and successful returns <code>1</code>;</li>
+<li>If promise result is complete and failed returns <code>2</code>.</li>
+</ul>
+<h6><a class="header" href="#panics-4" id="panics-4">Panics</a></h6>
+<ul>
+<li>If <code>result_idx</code> does not correspond to an existing result panics with <code>InvalidResultIndex</code>.</li>
+<li>If copying the blob exhausts the memory limit it panics with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<h6><a class="header" href="#current-bugs" id="current-bugs">Current bugs</a></h6>
+<ul>
+<li>We currently have two separate functions to check for result completion and copy it.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_return(promise_idx: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>When promise <code>promise_idx</code> finishes executing its result is considered to be the result of the current function.</p>
+<h6><a class="header" href="#panics-5" id="panics-5">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+</ul>
+<h6><a class="header" href="#current-bugs-1" id="current-bugs-1">Current bugs</a></h6>
+<ul>
+<li>The current name <code>return_promise</code> is inconsistent with the naming convention of Promise API.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_create(account_id_len: u64, account_id_ptr: u64) -&gt; u64
+<span class="boring">}
+</span></code></pre></pre>
+<p>Creates a new promise towards given <code>account_id</code> without any actions attached to it.</p>
+<h6><a class="header" href="#panics-6" id="panics-6">Panics</a></h6>
+<ul>
+<li>If <code>account_id_len + account_id_ptr</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<h6><a class="header" href="#returns-4" id="returns-4">Returns</a></h6>
+<ul>
+<li>Index of the new promise that uniquely identifies it within the current execution of the method.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_then(promise_idx: u64, account_id_len: u64, account_id_ptr: u64) -&gt; u64
+<span class="boring">}
+</span></code></pre></pre>
+<p>Attaches a new empty promise that is executed after promise pointed by <code>promise_idx</code> is complete.</p>
+<h6><a class="header" href="#panics-7" id="panics-7">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If <code>account_id_len + account_id_ptr</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<h6><a class="header" href="#returns-5" id="returns-5">Returns</a></h6>
+<ul>
+<li>Index of the new promise that uniquely identifies it within the current execution of the method.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_action_create_account(promise_idx: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Appends <code>CreateAccount</code> action to the batch of actions for the given promise pointed by <code>promise_idx</code>.
+Details for the action: https://github.com/nearprotocol/NEPs/pull/8/files#diff-15b6752ec7d78e7b85b8c7de4a19cbd4R48</p>
+<h6><a class="header" href="#panics-8" id="panics-8">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If the promise pointed by the <code>promise_idx</code> is an ephemeral promise created by <code>promise_and</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_action_deploy_contract(promise_idx: u64, code_len: u64, code_ptr: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Appends <code>DeployContract</code> action to the batch of actions for the given promise pointed by <code>promise_idx</code>.
+Details for the action: https://github.com/nearprotocol/NEPs/pull/8/files#diff-15b6752ec7d78e7b85b8c7de4a19cbd4R49</p>
+<h6><a class="header" href="#panics-9" id="panics-9">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If the promise pointed by the <code>promise_idx</code> is an ephemeral promise created by <code>promise_and</code>.</li>
+<li>If <code>code_len + code_ptr</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_action_function_call(promise_idx: u64,
+                                   method_name_len: u64,
+                                   method_name_ptr: u64,
+                                   arguments_len: u64,
+                                   arguments_ptr: u64,
+                                   amount_ptr: u64,
+                                   gas: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Appends <code>FunctionCall</code> action to the batch of actions for the given promise pointed by <code>promise_idx</code>.
+Details for the action: https://github.com/nearprotocol/NEPs/pull/8/files#diff-15b6752ec7d78e7b85b8c7de4a19cbd4R50</p>
+<p><em>NOTE: Calling <code>promise_batch_create</code> and then <code>promise_batch_action_function_call</code> will produce the same promise as calling <code>promise_create</code> directly.</em></p>
+<h6><a class="header" href="#panics-10" id="panics-10">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If the promise pointed by the <code>promise_idx</code> is an ephemeral promise created by <code>promise_and</code>.</li>
+<li>If <code>account_id_len + account_id_ptr</code> or <code>method_name_len + method_name_ptr</code> or <code>arguments_len + arguments_ptr</code>
+or <code>amount_ptr + 16</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_action_transfer(promise_idx: u64, amount_ptr: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Appends <code>Transfer</code> action to the batch of actions for the given promise pointed by <code>promise_idx</code>.
+Details for the action: https://github.com/nearprotocol/NEPs/pull/8/files#diff-15b6752ec7d78e7b85b8c7de4a19cbd4R51</p>
+<h6><a class="header" href="#panics-11" id="panics-11">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If the promise pointed by the <code>promise_idx</code> is an ephemeral promise created by <code>promise_and</code>.</li>
+<li>If <code>amount_ptr + 16</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_action_stake(promise_idx: u64,
+                           amount_ptr: u64,
+                           bls_public_key_len: u64,
+                           bls_public_key_ptr: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Appends <code>Stake</code> action to the batch of actions for the given promise pointed by <code>promise_idx</code>.
+Details for the action: https://github.com/nearprotocol/NEPs/pull/8/files#diff-15b6752ec7d78e7b85b8c7de4a19cbd4R52</p>
+<h6><a class="header" href="#panics-12" id="panics-12">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If the promise pointed by the <code>promise_idx</code> is an ephemeral promise created by <code>promise_and</code>.</li>
+<li>If the given BLS public key is not a valid BLS public key (e.g. wrong length) <code>InvalidPublicKey</code>.</li>
+<li>If <code>amount_ptr + 16</code> or <code>bls_public_key_len + bls_public_key_ptr</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_action_add_key_with_full_access(promise_idx: u64,
+                                              public_key_len: u64,
+                                              public_key_ptr: u64,
+                                              nonce: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Appends <code>AddKey</code> action to the batch of actions for the given promise pointed by <code>promise_idx</code>.
+Details for the action: https://github.com/nearprotocol/NEPs/pull/8/files#diff-15b6752ec7d78e7b85b8c7de4a19cbd4R54
+The access key will have <code>FullAccess</code> permission, details: https://github.com/nearprotocol/NEPs/blob/master/text/0005-access-keys.md#guide-level-explanation</p>
+<h6><a class="header" href="#panics-13" id="panics-13">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If the promise pointed by the <code>promise_idx</code> is an ephemeral promise created by <code>promise_and</code>.</li>
+<li>If the given public key is not a valid public key (e.g. wrong length) <code>InvalidPublicKey</code>.</li>
+<li>If <code>public_key_len + public_key_ptr</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_action_add_key_with_function_call(promise_idx: u64,
+                                                public_key_len: u64,
+                                                public_key_ptr: u64,
+                                                nonce: u64,
+                                                allowance_ptr: u64,
+                                                receiver_id_len: u64,
+                                                receiver_id_ptr: u64,
+                                                method_names_len: u64,
+                                                method_names_ptr: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Appends <code>AddKey</code> action to the batch of actions for the given promise pointed by <code>promise_idx</code>.
+Details for the action: https://github.com/nearprotocol/NEPs/pull/8/files#diff-156752ec7d78e7b85b8c7de4a19cbd4R54
+The access key will have <code>FunctionCall</code> permission, details: https://github.com/nearprotocol/NEPs/blob/master/text/0005-access-keys.md#guide-level-explanation</p>
+<ul>
+<li>If the <code>allowance</code> value (not the pointer) is <code>0</code>, the allowance is set to <code>None</code> (which means unlimited allowance). And positive value represents a <code>Some(...)</code> allowance.</li>
+<li>Given <code>method_names</code> is a <code>utf-8</code> string with <code>,</code> used as a separator. The vm will split the given string into a vector of strings.</li>
+</ul>
+<h6><a class="header" href="#panics-14" id="panics-14">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If the promise pointed by the <code>promise_idx</code> is an ephemeral promise created by <code>promise_and</code>.</li>
+<li>If the given public key is not a valid public key (e.g. wrong length) <code>InvalidPublicKey</code>.</li>
+<li>if <code>method_names</code> is not a valid <code>utf-8</code> string, fails with <code>BadUTF8</code>.</li>
+<li>If <code>public_key_len + public_key_ptr</code>, <code>allowance_ptr + 16</code>, <code>receiver_id_len + receiver_id_ptr</code> or
+<code>method_names_len + method_names_ptr</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_action_delete_key(promise_idx: u64,
+                                public_key_len: u64,
+                                public_key_ptr: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Appends <code>DeleteKey</code> action to the batch of actions for the given promise pointed by <code>promise_idx</code>.
+Details for the action: https://github.com/nearprotocol/NEPs/pull/8/files#diff-15b6752ec7d78e7b85b8c7de4a19cbd4R55</p>
+<h6><a class="header" href="#panics-15" id="panics-15">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If the promise pointed by the <code>promise_idx</code> is an ephemeral promise created by <code>promise_and</code>.</li>
+<li>If the given public key is not a valid public key (e.g. wrong length) <code>InvalidPublicKey</code>.</li>
+<li>If <code>public_key_len + public_key_ptr</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+<hr />
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>promise_batch_action_delete_account(promise_idx: u64,
+                                    beneficiary_id_len: u64,
+                                    beneficiary_id_ptr: u64)
+<span class="boring">}
+</span></code></pre></pre>
+<p>Appends <code>DeleteAccount</code> action to the batch of actions for the given promise pointed by <code>promise_idx</code>.
+Action is used to delete an account. It can be performed on a newly created account, on your own account or an account with
+insufficient funds to pay rent. Takes <code>beneficiary_id</code> to indicate where to send the remaining funds.</p>
+<h6><a class="header" href="#panics-16" id="panics-16">Panics</a></h6>
+<ul>
+<li>If <code>promise_idx</code> does not correspond to an existing promise panics with <code>InvalidPromiseIndex</code>.</li>
+<li>If the promise pointed by the <code>promise_idx</code> is an ephemeral promise created by <code>promise_and</code>.</li>
+<li>If <code>beneficiary_id_len + beneficiary_id_ptr</code> points outside the memory of the guest or host, with <code>MemoryAccessViolation</code>.</li>
+<li>If called in a view function panics with <code>ProhibitedInView</code>.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../../RuntimeSpec/Components/BindingsSpec/TrieAPI.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../../RuntimeSpec/Components/BindingsSpec/ContextAPI.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../../RuntimeSpec/Components/BindingsSpec/TrieAPI.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../../RuntimeSpec/Components/BindingsSpec/ContextAPI.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

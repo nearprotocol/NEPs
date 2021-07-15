@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Architecture - NEAR Protocol Specification</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Specification of the NEAR Protocol">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="Terminology.html"><strong aria-hidden="true">2.</strong> Terminology</a></li><li class="chapter-item expanded "><a href="DataStructures/README.html"><strong aria-hidden="true">3.</strong> Data Structures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="DataStructures/Account.html"><strong aria-hidden="true">3.1.</strong> Account</a></li><li class="chapter-item expanded "><a href="DataStructures/AccessKey.html"><strong aria-hidden="true">3.2.</strong> Access Key</a></li><li class="chapter-item expanded "><a href="DataStructures/Transaction.html"><strong aria-hidden="true">3.3.</strong> Transaction</a></li></ol></li><li class="chapter-item expanded "><a href="Architecture.html" class="active"><strong aria-hidden="true">4.</strong> Architecture</a></li><li class="chapter-item expanded "><a href="ChainSpec/README.html"><strong aria-hidden="true">5.</strong> Chain specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ChainSpec/Consensus.html"><strong aria-hidden="true">5.1.</strong> Consensus</a></li><li class="chapter-item expanded "><a href="ChainSpec/Upgradability.html"><strong aria-hidden="true">5.2.</strong> Upgradability</a></li><li class="chapter-item expanded "><a href="ChainSpec/Transactions.html"><strong aria-hidden="true">5.3.</strong> Transactions</a></li><li class="chapter-item expanded "><a href="ChainSpec/LightClient.html"><strong aria-hidden="true">5.4.</strong> Light Client</a></li></ol></li><li class="chapter-item expanded "><a href="RuntimeSpec/README.html"><strong aria-hidden="true">6.</strong> Runtime specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="RuntimeSpec/Runtime.html"><strong aria-hidden="true">6.1.</strong> Runtime</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/FunctionCall.html"><strong aria-hidden="true">6.2.</strong> FunctionCall</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Transactions.html"><strong aria-hidden="true">6.3.</strong> Transactions</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Actions.html"><strong aria-hidden="true">6.4.</strong> Actions</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Receipts.html"><strong aria-hidden="true">6.5.</strong> Receipts</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Refunds.html"><strong aria-hidden="true">6.6.</strong> Refunds</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Scenarios/Scenarios.html"><strong aria-hidden="true">6.7.</strong> Scenarios</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="RuntimeSpec/Scenarios/FinancialTransaction.html"><strong aria-hidden="true">6.7.1.</strong> Financial Transaction</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Scenarios/CrossContractCall.html"><strong aria-hidden="true">6.7.2.</strong> Cross-Contract Call</a></li></ol></li><li class="chapter-item expanded "><a href="RuntimeSpec/Components/Components.html"><strong aria-hidden="true">6.8.</strong> Components</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="RuntimeSpec/Components/RuntimeCrate.html"><strong aria-hidden="true">6.8.1.</strong> Runtime crate</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Components/BindingsSpec/BindingsSpec.html"><strong aria-hidden="true">6.8.2.</strong> Bindings Specification</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="RuntimeSpec/Components/BindingsSpec/RegistersAPI.html"><strong aria-hidden="true">6.8.2.1.</strong> Registers API</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Components/BindingsSpec/TrieAPI.html"><strong aria-hidden="true">6.8.2.2.</strong> Trie API</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Components/BindingsSpec/PromisesAPI.html"><strong aria-hidden="true">6.8.2.3.</strong> Promises API</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Components/BindingsSpec/ContextAPI.html"><strong aria-hidden="true">6.8.2.4.</strong> Context API</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Components/BindingsSpec/EconomicsAPI.html"><strong aria-hidden="true">6.8.2.5.</strong> Economics API</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Components/BindingsSpec/MathAPI.html"><strong aria-hidden="true">6.8.2.6.</strong> Math API</a></li><li class="chapter-item expanded "><a href="RuntimeSpec/Components/BindingsSpec/MiscellaneousAPI.html"><strong aria-hidden="true">6.8.2.7.</strong> Miscellaneous API</a></li></ol></li><li class="chapter-item expanded "><a href="RuntimeSpec/Components/Precompiles/README.html"><strong aria-hidden="true">6.8.3.</strong> Pre-compiles</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="RuntimeSpec/Components/Precompiles/EVM.html"><strong aria-hidden="true">6.8.3.1.</strong> EVM</a></li></ol></li></ol></li></ol></li><li class="chapter-item expanded "><a href="GenesisConfig/GenesisConfig.html"><strong aria-hidden="true">7.</strong> GenesisConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GenesisConfig/RuntimeConfig.html"><strong aria-hidden="true">7.1.</strong> RuntimeConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GenesisConfig/RuntimeFeeConfig.html"><strong aria-hidden="true">7.1.1.</strong> RuntimeFeeConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GenesisConfig/RuntimeFeeConfig/AccessKeyCreationConfig.html"><strong aria-hidden="true">7.1.1.1.</strong> AccessKeyCreationConfig</a></li><li class="chapter-item expanded "><a href="GenesisConfig/RuntimeFeeConfig/ActionCreationConfig.html"><strong aria-hidden="true">7.1.1.2.</strong> ActionCreationConfig</a></li><li class="chapter-item expanded "><a href="GenesisConfig/RuntimeFeeConfig/DataReceiptCreationConfig.html"><strong aria-hidden="true">7.1.1.3.</strong> DataReceiptCreationConfig</a></li><li class="chapter-item expanded "><a href="GenesisConfig/RuntimeFeeConfig/StorageUsageConfig.html"><strong aria-hidden="true">7.1.1.4.</strong> StorageUsageConfig</a></li><li class="chapter-item expanded "><a href="GenesisConfig/RuntimeFeeConfig/Fee.html"><strong aria-hidden="true">7.1.1.5.</strong> Fee</a></li><li class="chapter-item expanded "><a href="GenesisConfig/RuntimeFeeConfig/Fraction.html"><strong aria-hidden="true">7.1.1.6.</strong> Fraction</a></li></ol></li><li class="chapter-item expanded "><a href="GenesisConfig/VMConfig.html"><strong aria-hidden="true">7.1.2.</strong> VMConfig</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GenesisConfig/ExtCostsConfig.html"><strong aria-hidden="true">7.1.2.1.</strong> ExtCostsConfig</a></li></ol></li><li class="chapter-item expanded "><a href="GenesisConfig/StateRecord.html"><strong aria-hidden="true">7.1.3.</strong> StateRecord</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="Economics/README.html"><strong aria-hidden="true">8.</strong> Economics</a></li><li class="chapter-item expanded "><a href="Standards/README.html"><strong aria-hidden="true">9.</strong> Standards</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Standards/Tokens/FungibleToken.html"><strong aria-hidden="true">9.1.</strong> Fungible Token</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">NEAR Protocol Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#architecture" id="architecture">Architecture</a></h1>
+<p>Near node consists roughly of a blockchain layer and a runtime layer.
+These layers are designed to be independent from each other: the blockchain layer can in theory support runtime that processes
+transactions differently, has a different virtual machine (e.g. RISC-V), has different fees; on the other hand the runtime
+is oblivious to where the transactions are coming from. It is not aware whether the
+blockchain it runs on is sharded, what consensus it uses, and whether it runs as part of a blockchain at all.</p>
+<p>The blockchain layer and the runtime layer share the following components and invariants:</p>
+<h2><a class="header" href="#transactions-and-receipts" id="transactions-and-receipts">Transactions and Receipts</a></h2>
+<p>Transactions and receipts are a fundamental concept in Near Protocol. Transactions represent actions requested by the
+blockchain user, e.g. send assets, create account, execute a method, etc. Receipts, on the other hand is an internal
+structure; think of a receipt as a message which is used inside a message-passing system.</p>
+<p>Transactions are created outside the Near Protocol node, by the user who sends them via RPC or network communication.
+Receipts are created by the runtime from transactions or as the result of processing other receipts.</p>
+<p>Blockchain layer cannot create or process transactions and receipts, it can only manipulate them by passing them
+around and feeding them to a runtime.</p>
+<h2><a class="header" href="#account-based-system" id="account-based-system">Account-Based System</a></h2>
+<p>Similar to Ethereum, Near Protocol is an account-based system. Which means that each blockchain user is roughly
+associated with one or several accounts (there are exceptions though, when users share an account and are separated
+through the access keys).</p>
+<p>The runtime is essentially a complex set of rules on what to do with accounts based on the information from the
+transactions and the receipts. It is therefore deeply aware of the concept of account.</p>
+<p>Blockchain layer however is mostly aware of the accounts through the trie (see below) and the validators (see below).
+Outside these two it does not operate on the accounts directly.</p>
+<h3><a class="header" href="#assume-every-account-belongs-to-its-own-shard" id="assume-every-account-belongs-to-its-own-shard">Assume every account belongs to its own shard</a></h3>
+<p>Every account at NEAR belongs to some shard.
+All the information related to this account also belongs to the same shard. The information includes:</p>
+<ul>
+<li>Balance</li>
+<li>Locked balance (for staking)</li>
+<li>Code of the contract</li>
+<li>Key-value storage of the contract</li>
+<li>All Access Keys</li>
+</ul>
+<p>Runtime assumes, it's the only information that is available for the contract execution.
+While other accounts may belong to the same shards, the Runtime never uses or provides them during contract execution.
+We can just assume that every account belongs to its own shard. So there is no reason to intentionally try to collocate accounts.</p>
+<h2><a class="header" href="#trie" id="trie">Trie</a></h2>
+<p>Near Protocol is a stateful blockchain -- there is a state associated with each account and the user actions performed
+through transactions mutate that state. The state then is stored as a trie, and both the blockchain layer and the
+runtime layer are aware of this technical detail.</p>
+<p>The blockchain layer manipulates the trie directly. It partitions the trie between the shards to distribute the load.
+It synchronizes the trie between the nodes, and eventually it is responsible for maintaining the consistency of the trie
+between the nodes through its consensus mechanism and other game-theoretic methods.</p>
+<p>The runtime layer is also aware that the storage that it uses to perform the operations on is a trie. In general it does
+not have to know this technical detail and in theory we could have abstracted out the trie as a generic key-value storage.
+However, we allow some trie-specific operations that we expose to the smart contract developers so that they utilize
+Near Protocol to its maximum efficiency.</p>
+<h2><a class="header" href="#tokens-and-gas" id="tokens-and-gas">Tokens and gas</a></h2>
+<p>Even though tokens is a fundamental concept of the blockchain, it is neatly encapsulated
+inside the runtime layer together with the gas, fees, and rewards.</p>
+<p>The only way the blockchain layer is aware of the tokens and the gas is through the computation of the exchange rate
+and the inflation which is based strictly on the block production mechanics.</p>
+<h2><a class="header" href="#validators" id="validators">Validators</a></h2>
+<p>Both the blockchain layer and the runtime layer are aware of a special group of participants who are
+responsible for maintaining the integrity of the Near Protocol. These participants are associated with the
+accounts and are rewarded accordingly. The reward part is what the runtime layer is aware of, while everything
+around the orchestration of the validators is inside the blockchain layer.</p>
+<h2><a class="header" href="#blockchain-layer-concepts" id="blockchain-layer-concepts">Blockchain Layer Concepts</a></h2>
+<p>Interestingly, the following concepts are for the blockchain layer only and the runtime layer is not aware of them:</p>
+<ul>
+<li>Sharding -- the runtime layer does not know that it is being used in a sharded blockchain, e.g. it does not know
+that the trie it works on is only a part of the overall blockchain state;</li>
+<li>Blocks or chunks -- the runtime does not know that the receipts that it processes constitute a chunk and that the output
+receipts will be used in other chunks. From the runtime perspective it consumes and outputs batches of transactions and receipts;</li>
+<li>Consensus -- the runtime does not know how consistency of the state is maintained;</li>
+<li>Communication -- the runtime don't know anything about the current network topology. Receipt has only a receiver_id (a recipient account), but knows nothing about the destination shard, so it's a responsibility of a blockchain layer to route a particular receipt.</li>
+</ul>
+<h2><a class="header" href="#runtime-layer-concepts" id="runtime-layer-concepts">Runtime Layer Concepts</a></h2>
+<ul>
+<li>Fees and rewards -- fees and rewards are neatly encapsulated in the runtime layer. The blockchain layer, however
+has an indirect knowledge of them through the computation of the tokens-to-gas exchange rate and the inflation.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="DataStructures/Transaction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="ChainSpec/README.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="DataStructures/Transaction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="ChainSpec/README.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
