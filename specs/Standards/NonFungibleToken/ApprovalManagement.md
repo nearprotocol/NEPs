@@ -320,7 +320,7 @@ The NFT contract must implement the following methods:
 //   storing approver data
 // * Contract MUST panic if called by someone other than token owner
 // * Contract MUST panic if addition would cause `nft_revoke_all` to exceed
-//   single-block gas limit
+//   single-block gas limit. See below for more info.
 // * Contract MUST increment approval ID even if re-approving an account
 // * If successfully approved or if had already been approved, and if `msg` is
 //   present, contract MUST call `nft_on_approve` on `account_id`. See
@@ -390,6 +390,24 @@ function nft_is_approved(
   approval_id: number|null
 ): boolean {}
 ```
+
+### Why must `nft_approve` panic if `nft_revoke_all` would fail later?
+
+In the description of `nft_approve` above, it states:
+
+    Contract MUST panic if addition would cause `nft_revoke_all` to exceed
+    single-block gas limit.
+
+What does this mean?
+
+First, it's useful to understand what we mean by "single-block gas limit". This refers to the [hard cap on gas per block at the protocol layer](https://docs.near.org/docs/concepts/gas#thinking-in-gas). This number will increase over time.
+
+Removing data from a contract uses gas, so if an NFT had a large enough number of approvals, `nft_revoke_all` would fail, because calling it would exceed the maximum gas.
+
+Contracts must prevent this by capping the number of approvals for a given token. However, it is up to contract authors to determine a sensible cap for their contract (and the single block gas limit at the time they deploy). Since contract implementations can vary, some implementations will be able to support a larger number of approvals than others, even with the same maximum gas per block.
+
+Contract authors may choose to set a cap of something small and safe like 10 approvals, or they could dynamically calculate whether a new approval would break future calls to `nft_revoke_all`. But every contract MUST ensure that they never break the functionality of `nft_revoke_all`.
+
 
 ### Approved Account Contract Interface
 
