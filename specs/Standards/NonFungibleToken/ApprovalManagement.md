@@ -255,6 +255,15 @@ Example token data:
 }
 ```
 
+In Rust, the standard library `HashMap` is the recommended type for the `approvals` field, though any `map` may be used.
+```diff
+ pub struct Token = {
+   pub id: String,
+   pub owner_id: String,
++  pub approvals: std::collections::HashMap<String, u64>,
+ }
+```
+
 ### What is an "approval ID"?
 
 This is a unique number given to each approval that allows well-intentioned marketplaces or other 3rd-party NFT resellers to avoid a race condition. The race condition occurs when:
@@ -319,8 +328,6 @@ The NFT contract must implement the following methods:
 // * Contract MAY require caller to attach larger deposit, to cover cost of
 //   storing approver data
 // * Contract MUST panic if called by someone other than token owner
-// * Contract MUST panic if addition would cause `nft_revoke_all` to exceed
-//   single-block gas limit
 // * Contract MUST increment approval ID even if re-approving an account
 // * If successfully approved or if had already been approved, and if `msg` is
 //   present, contract MUST call `nft_on_approve` on `account_id`. See
