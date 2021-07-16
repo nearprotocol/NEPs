@@ -130,6 +130,11 @@ function nft_transfer_call(
 
 // Returns the token with the given `token_id` or `null` if no such token.
 function nft_token(token_id: string): Token|null {}
+
+// Returns the holder of the token with the given `token_id`. In the core,
+// the holder of the token is identical to the owner of the token, but this
+// method will be expanded on in further standards.
+function nft_holder(token_id: string): String|null {}
 ```
 
 The following behavior is required, but contract authors may name this function something other than the conventional `nft_resolve_transfer` used here.
@@ -203,4 +208,3 @@ function nft_on_transfer(
   [gas]: https://docs.near.org/docs/concepts/gas
   [Metadata]: Metadata.md
   [Approval Management]: ApprovalManagement.md
-

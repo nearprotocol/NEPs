@@ -50,10 +50,16 @@ type TokenMetadata = {
 }
 ```
 
-A new function MUST be supported on the NFT contract:
+Three new functions MUST be supported on the NFT contract:
 
 ```ts
+// Get the metadata for the NFT contract.
 function nft_metadata(): NFTContractMetadata {}
+// Get the on-chain metadata for the token with with `token_id`.
+function nft_token_metadata(token_id: string): TokenMetadata {}
+// Get the URI (preferably of a decentralized storage platform) where the token metadata
+// is stored.
+function nft_token_uri(token_id: string): String {}
 ```
 
 A new attribute MUST be added to each `Token` struct:
